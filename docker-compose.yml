@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  weather-app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysqldb
+      - influxdb
+
+  mysqldb:
+    image: mysql:8.0.19
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "my-secret-pw"
+      MYSQL_DATABASE: "db1"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+
+  influxdb:
+    image: influxdb:1.7.10-alpine
+    ports:
+      - 8086:8086
+    environment:
+      INFLUXDB_DB: "db0"
+      INFLUXDB_USER: "user"
+      INFLUXDB_USER_PASSWORD: "password"
