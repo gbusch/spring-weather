@@ -8,6 +8,7 @@ services:
     depends_on:
       - mysqldb
       - influxdb
+    restart: on-failure
 
   mysqldb:
     image: mysql:8.0.19
