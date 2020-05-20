@@ -7,7 +7,6 @@ services:
       - 8080:8080
     depends_on:
       - mysqldb
-      - influxdb
     restart: on-failure
 
   mysqldb:
@@ -20,11 +19,23 @@ services:
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
 
-  influxdb:
-    image: influxdb:1.7.10-alpine
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.7.0
     ports:
-      - 8086:8086
+      - 5000:5000
     environment:
-      INFLUXDB_DB: "db0"
-      INFLUXDB_USER: "user"
-      INFLUXDB_USER_PASSWORD: "password"
+      - discovery.type=single-node
+    volumes:
+      - ./logging/conf/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    ports:
+      - 5601:5601
