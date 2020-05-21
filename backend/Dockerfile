@@ -1,14 +1,16 @@
 FROM adoptopenjdk/maven-openjdk11 as development
 
 WORKDIR /work
-ADD pom.xml /work/
+ADD backend/pom.xml /work/
 RUN mvn dependency:resolve-plugins dependency:go-offline
 
-ADD src /work/src
+ADD backend/src /work/src
 RUN mvn -q package --quiet
 
 FROM openjdk:11-jdk-slim as deployment
+RUN apt-get update && apt-get install -y curl
 WORKDIR /
-ADD config /config
+ADD backend/config /config
 COPY --from=development /work/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
+HEALTHCHECK --interval=5s --timeout=5s --retries=5 CMD curl --fail http://localhost:8080/actuator/health || exit 1
