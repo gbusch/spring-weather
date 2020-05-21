@@ -1,5 +1,6 @@
 package weather.controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import weather.model.Contract;
+import weather.model.Price;
+import weather.repository.FileRepository;
 import weather.service.ContractService;
 
 @RestController
@@ -23,7 +26,12 @@ public class ContractController {
         this.contractService = contractService;
     }
 
-    @PostMapping(path = "/contract")
+    @GetMapping("/prices")
+    public @ResponseBody
+    Iterable<Price> getAllPrices() throws IOException {return FileRepository.getPrices();
+    }
+
+    @PostMapping("/contract")
     public @ResponseBody Contract purchaseContract(@RequestParam String name, @RequestParam double price) {
         return contractService.purchaseContract(name, price);
     }

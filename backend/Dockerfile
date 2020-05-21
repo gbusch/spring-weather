@@ -9,5 +9,6 @@ RUN mvn -q package --quiet
 
 FROM openjdk:11-jdk-slim as deployment
 WORKDIR /
+ADD config /config
 COPY --from=development /work/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
