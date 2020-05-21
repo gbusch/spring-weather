@@ -15,20 +15,23 @@ import weather.model.Contract;
 import weather.model.Price;
 import weather.repository.FileRepository;
 import weather.service.ContractService;
+import weather.service.FileService;
 
 @RestController
 public class ContractController {
 
     private final ContractService contractService;
+    private final FileService fileService;
 
     @Autowired
-    public ContractController(ContractService contractService) {
+    public ContractController(ContractService contractService, FileService fileService) {
         this.contractService = contractService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/prices")
     public @ResponseBody
-    Iterable<Price> getAllPrices() throws IOException {return FileRepository.getPrices();
+    Iterable<Price> getAllPrices() throws IOException {return fileService.getPrices();
     }
 
     @PostMapping("/contract")
