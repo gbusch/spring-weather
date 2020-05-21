@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import weather.model.Contract;
+import weather.model.Price;
 import weather.repository.ContractRepository;
+import weather.repository.FileRepository;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,6 +20,10 @@ public class ContractService {
     @Autowired
     public ContractService(ContractRepository contractRepository) {
         this.contractRepository = contractRepository;
+    }
+
+    public Iterable<Price> getPrices() throws IOException {
+        return FileRepository.getPrices();
     }
 
     public Contract purchaseContract(String name, double price) {

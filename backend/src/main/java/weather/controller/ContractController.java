@@ -13,25 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import weather.model.Contract;
 import weather.model.Price;
-import weather.repository.FileRepository;
 import weather.service.ContractService;
-import weather.service.FileService;
 
 @RestController
 public class ContractController {
 
     private final ContractService contractService;
-    private final FileService fileService;
 
     @Autowired
-    public ContractController(ContractService contractService, FileService fileService) {
+    public ContractController(ContractService contractService) {
         this.contractService = contractService;
-        this.fileService = fileService;
     }
 
     @GetMapping("/prices")
     public @ResponseBody
-    Iterable<Price> getAllPrices() throws IOException {return fileService.getPrices();
+    Iterable<Price> getAllPrices() throws IOException {return contractService.getPrices();
     }
 
     @PostMapping("/contract")
