@@ -14,5 +14,4 @@ docker run --rm -i \
   behave \
   --format pretty \
   --tags=~@skip \
-  --tags=~@manual \
   $*

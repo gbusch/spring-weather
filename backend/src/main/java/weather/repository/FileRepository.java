@@ -14,18 +14,18 @@ import java.util.Optional;
 
 @Repository
 public class FileRepository {
-    public static List<Price> getPrices() throws IOException {
+    public static List<Price> getPrices() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             FileInputStream stream = new FileInputStream(new File("config/prices.json"));
             return mapper.readValue(stream,
                     mapper.getTypeFactory().constructParametricType(List.class, Price.class));
         } catch (IOException e) {
-            throw e;
+            throw new RuntimeException(e);
         }
     }
 
-    public static Optional<Price> getPriceOfModel(String model) throws IOException {
+    public static Optional<Price> getPriceOfModel(String model) {
             List<Price> allPrices = getPrices();
             return allPrices.stream()
                     .filter(price -> price.getName().equals(model))

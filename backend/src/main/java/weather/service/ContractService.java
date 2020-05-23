@@ -28,11 +28,11 @@ public class ContractService {
         return FileRepository.getPrices();
     }
 
-    private Optional<Price> getPriceOfModel(String model) throws IOException {
+    private Optional<Price> getPriceOfModel(String model) {
         return FileRepository.getPriceOfModel(model);
     }
 
-    public Contract purchaseContract(String name, String model, Double price) throws IOException {
+    public Contract purchaseContract(String name, String model, Double price) {
         Double priceFromModel = getPriceOfModel(model)
                 .map(Price::getPrice)
                 .orElseThrow(() -> new NoSuchPriceModelException("price model is not offered"));
