@@ -20,5 +20,6 @@ public class Contract {
     @Id
     private String id;
     private String name;
-    private double price;
+    private String model;
+    private Double price;
 }

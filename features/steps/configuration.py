@@ -8,7 +8,6 @@ def set_prices(context):
     prices = []
     for row in context.table:
         prices.append({k: v for k,v in zip(headings, row)})
-    print(prices)
     with open("test-tmp/backend/config/prices.json", "w") as fp:
         json.dump(prices, fp)
 

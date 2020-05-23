@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class FileRepository {
@@ -19,10 +20,15 @@ public class FileRepository {
             FileInputStream stream = new FileInputStream(new File("config/prices.json"));
             return mapper.readValue(stream,
                     mapper.getTypeFactory().constructParametricType(List.class, Price.class));
-        } catch (FileNotFoundException e) {
-            throw e;
-        } catch (JsonParseException e) {
+        } catch (IOException e) {
             throw e;
         }
+    }
+
+    public static Optional<Price> getPriceOfModel(String model) throws IOException {
+            List<Price> allPrices = getPrices();
+            return allPrices.stream()
+                    .filter(price -> price.getName().equals(model))
+                    .findFirst();
     }
 }

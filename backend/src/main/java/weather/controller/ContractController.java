@@ -4,14 +4,10 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import weather.model.Contract;
+import weather.model.ContractRequest;
 import weather.model.Price;
 import weather.service.ContractService;
 
@@ -31,8 +27,8 @@ public class ContractController {
     }
 
     @PostMapping("/contract")
-    public @ResponseBody Contract purchaseContract(@RequestParam String name, @RequestParam double price) {
-        return contractService.purchaseContract(name, price);
+    public @ResponseBody Contract purchaseContract(@RequestBody ContractRequest request) throws IOException {
+        return contractService.purchaseContract(request.getName(), request.getModel(), request.getPrice());
     }
 
     @GetMapping("/contracts")
