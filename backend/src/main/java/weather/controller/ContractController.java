@@ -27,7 +27,7 @@ public class ContractController {
     }
 
     @PostMapping("/contract")
-    public @ResponseBody Contract purchaseContract(@RequestBody ContractRequest request) throws IOException {
+    public @ResponseBody Contract purchaseContract(@RequestBody ContractRequest request) {
         return contractService.purchaseContract(request.getName(), request.getModel(), request.getPrice());
     }
 

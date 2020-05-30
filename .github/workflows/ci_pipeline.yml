@@ -9,7 +9,7 @@ jobs:
     steps:
       -   uses: actions/checkout@v2
       -   name: Start the test environment
-          run: ./start.sh --build --detach
+          run: ./start-test.sh --build --detach
 
       -   name: Ensure services up and ready
           run: ./ensure_services_ready.sh
