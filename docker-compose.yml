@@ -20,24 +20,3 @@ services:
       MYSQL_DATABASE: "db1"
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.7.0
-    ports:
-      - 5000:5000
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - ./logging/conf/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
-    environment:
-      - discovery.type=single-node
-    ports:
-      - 9200:9200
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.7.0
-    ports:
-      - 5601:5601
