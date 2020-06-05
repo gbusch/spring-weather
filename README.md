@@ -1,5 +1,7 @@
 # Simple Weather-Service with Spring
 
+![](https://github.com/gbusch/spring-weather/workflows/CI%20pipeline/badge.svg)
+
 This repo contains a small project that I started to learn and deepen my knowledge, mainly in:
 * Java and Spring Boot in general
 * Docker / docker-compose
@@ -121,7 +123,7 @@ against it in the next step. But also, since it includes a build, this step insu
 as well as unit tests, are successful.
 * Run `ensure_services_ready.sh`: This script ensures that all services are ready.
 * Run the feature tests with `test-features.sh`: This script first builds a Docker image that contains python, behave 
-and other necessary python library. Then it starts a container from this image to run the feature test in it.  
+and other necessary python library. Then it starts a container from this image to run the feature test in it.
 
 
 ### Logging with the Elastic stack
