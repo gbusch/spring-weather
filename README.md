@@ -67,8 +67,9 @@ The actual weather information is retrieved from the external openweathermap.org
 As told before this project is just for learning. In the following I will point at some aspects where I learned most.
 
 ### Java
-I am a newbie in Java and mainly programmed in python up to now. The Spring Boot framework and a good IDE (e.g. 
-IntelliJ) makes it easy to write simple web applications.
+A newbie in Java and working mainly with python up to now, the folder structure was at first intimidating to me: Where 
+do I start. However, with the [Spring Initializr](https://start.spring.io) you can easily create a starter for your 
+web application and with a good IDE (e.g. IntelliJ) it is no rocket science to extend it step by step.
 
 #### Lombok
 When using Lombok, you do not need to write getters and setters for your classes. Instead, you only put an annotation 
@@ -104,8 +105,23 @@ TBD
 #### Local test environment with Wiremock
 TBD
 
-#### CI with Github Actions
-TBD
+Let's assume that Wiremock runs on localhost:3000. We can then post the following mapping:
+```
+curl -X POST -H "Content-Type: application/json" localhost:3000/__admin/mappings \
+-d '{"request": {"method": "GET", "urlPattern": "^/hello(.*)"}, "response": {"body": "hello world", "status": 200}}'
+```
+When we now make a GET request to localhost:3000 that starts with `hello`, this request will be responded to with 
+"hello world" and status 200.
+
+#### CI with GitHub Actions
+With GitHub Actions, CI is now completely integrated in GitHub! My pipeline can be found in the default
+location [.github/workflows/ci_pipeline.yml](.github/workflows/ci_pipeline.yml) and has three steps:
+* Start the test system `start-test.sh`. One the one hand the test system needs to be up so that we can run tests 
+against it in the next step. But also, since it includes a build, this step insures that the maven build of the service,
+as well as unit tests, are successful.
+* Run `ensure_services_ready.sh`: This script ensures that all services are ready.
+* Run the feature tests with `test-features.sh`: This script first builds a Docker image that contains python, behave 
+and other necessary python library. Then it starts a container from this image to run the feature test in it.  
 
 
 ### Logging with the Elastic stack
